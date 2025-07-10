@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社内チャットボット</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>社内チャットボット</h1>
+            <div class="auth-controls">
+                <button id="authButton" class="auth-btn">Googleでログイン</button>
+                <span id="authStatus" class="auth-status">モックデータ使用中</span>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-bubble">
+                    こんにちは！社内のよくある質問にお答えします。何かご質問はありますか？
+                </div>
+                <div class="message-time"></div>
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <div class="input-container">
+                <input type="text" id="messageInput" placeholder="メッセージを入力してください..." autocomplete="off">
+                <button id="sendButton">送信</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Google APIs Client Library for OAuth 2.0 -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <script src="config.js"></script>
+    <script src="oauth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

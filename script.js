@@ -220,7 +220,7 @@ class Chatbot {
             }
             
             let responseText;
-            const isUsingMockData = !isGoogleCalendarConfigured() || GOOGLE_CONFIG.USE_MOCK_DATA;
+            const isUsingMockData = !oauthStatus.isSignedIn && (!isGoogleCalendarConfigured() || GOOGLE_CONFIG.USE_MOCK_DATA);
             
             if (schedule.length === 0) {
                 responseText = '今後の出社予定はありません。';

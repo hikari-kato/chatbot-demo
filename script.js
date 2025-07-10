@@ -24,18 +24,26 @@ class Chatbot {
     
     async initializeOAuth() {
         try {
-            console.log('OAuth初期化を開始...');
+            if (window.secureLog) {
+                secureLog('info', 'OAuth初期化を開始...');
+            }
             const initialized = await googleOAuth.initialize();
             
             if (initialized) {
                 this.updateAuthUI();
-                console.log('OAuth初期化完了');
+                if (window.secureLog) {
+                    secureLog('info', 'OAuth初期化完了');
+                }
             } else {
-                console.log('OAuth設定なし、モックモード継続');
+                if (window.secureLog) {
+                    secureLog('info', 'OAuth設定なし、モックモード継続');
+                }
                 this.authButton.style.display = 'none';
             }
         } catch (error) {
-            console.error('OAuth初期化エラー:', error);
+            if (window.secureLog) {
+                secureLog('error', 'OAuth初期化エラー:', error);
+            }
             this.updateAuthStatus('初期化エラー', 'error');
         }
     }
@@ -140,7 +148,9 @@ class Chatbot {
         
         // 動的応答（Google Calendar API連携）
         if (this.containsKeywords(lowerMessage, ['出社', '出勤', '会社', 'オフィス'])) {
-            console.log('出社予定の質問を検出しました');
+            if (window.secureLog) {
+                secureLog('info', '出社予定の質問を検出しました');
+            }
             return await this.getWorkScheduleResponse();
         }
         
@@ -247,13 +257,9 @@ class Chatbot {
             return responseText;
             
         } catch (error) {
-            console.error('カレンダー取得エラー:', error);
-            console.error('エラー詳細:', {
-                message: error.message,
-                stack: error.stack,
-                apiKey: GOOGLE_CONFIG.API_KEY ? 'CONFIGURED' : 'NOT_CONFIGURED',
-                calendarId: GOOGLE_CONFIG.CALENDAR_ID
-            });
+            if (window.secureLog) {
+                secureLog('error', 'カレンダー取得エラー:', error);
+            }
             
             const fallbackSchedule = this.getMockWorkSchedule();
             let responseText;

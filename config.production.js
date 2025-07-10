@@ -1,7 +1,7 @@
 // GitHub Pages本番用設定（Google Calendar連携有効）
 const GOOGLE_CONFIG = {
     // Google Cloud ConsoleのOAuth 2.0 クライアントIDを設定してください
-    CLIENT_ID: 'YOUR_OAUTH_CLIENT_ID_HERE.apps.googleusercontent.com',
+    CLIENT_ID: '643050291076-l12aq58rbjikkcv118kgfape3rrlbbi2.apps.googleusercontent.com',
     
     // APIキー（Calendar API制限付き）
     API_KEY: '',

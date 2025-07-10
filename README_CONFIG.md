@@ -1,6 +1,15 @@
 # 設定ファイルの使用方法
 
-## 🔧 セットアップ手順
+## 🌐 GitHub Pages（公開サイト）
+
+GitHub Pagesでは**モックデータ**を使用します：
+- `config.public.js` - モックデータ使用
+- OAuth認証ボタンは非表示
+- 「出社する日はいつですか？」で予想される出社パターンを表示
+
+**URL**: https://hikari-kato.github.io/chatbot-demo
+
+## 🔧 ローカル開発環境でのセットアップ
 
 ### 1. 設定ファイルの作成
 ```bash
@@ -56,9 +65,24 @@ const GOOGLE_CONFIG = {
 ## 📂 ファイル構成
 
 ```
-config.template.js  ← 公開テンプレート（GitHub公開）
+config.public.js    ← GitHub Pages用（モックデータ）
+config.template.js  ← 設定テンプレート（GitHub公開）
 config.private.js   ← 実際の設定（.gitignoreで除外）
 ```
+
+## 🔄 設定の切り替え方法
+
+### GitHub Pages用（モックデータ）
+```html
+<script src="config.public.js"></script>
+```
+
+### ローカル開発用（実際のAPI連携）
+```html
+<script src="config.private.js"></script>
+```
+
+`index.html`の40行目を変更して設定を切り替えます。
 
 ## 🚀 使用方法
 

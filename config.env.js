@@ -1,15 +1,18 @@
-// セキュアな本番設定（CLIENT_ID暗号化、エラーログ非表示）
+// 環境変数ベースのセキュア設定
 const GOOGLE_CONFIG = {
-    // 暗号化されたCLIENT_ID（Base64エンコード）
-    CLIENT_ID_ENCODED: 'NjQzMDUwMjkxMDc2LWwxMmFxNThyYmppa2tjdjExOGtnZmFwZTNycmxiYmkyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t',
+    // 本番環境では環境変数から取得、開発環境では設定値使用
+    API_KEY: typeof process !== 'undefined' && process.env ? 
+        process.env.GOOGLE_API_KEY : 
+        'AIzaSyB60YUtYNZuGK6Ie8lknOolgdLZNXvFDqs',
     
-    // APIキー（使用しない）
-    API_KEY: '',
+    CLIENT_ID: typeof process !== 'undefined' && process.env ? 
+        process.env.GOOGLE_CLIENT_ID : 
+        '643050291076-qeu6qnkol3u38uoabbgp4a08sf3sh6a2.apps.googleusercontent.com',
     
     // カレンダーID
     CALENDAR_ID: 'primary',
     
-    // 本番環境設定
+    // 本番環境ではOAuth認証を使用
     USE_MOCK_DATA: false,
     
     // OAuth設定
@@ -29,19 +32,6 @@ const GOOGLE_CONFIG = {
     LOG_LEVEL: 'error'
 };
 
-// CLIENT_IDをデコードして取得
-function getClientId() {
-    try {
-        return atob(GOOGLE_CONFIG.CLIENT_ID_ENCODED);
-    } catch (e) {
-        console.error('CLIENT_ID decode error');
-        return null;
-    }
-}
-
-// 実際のCLIENT_IDを取得（外部からは見えない）
-GOOGLE_CONFIG.CLIENT_ID = getClientId();
-
 // OAuth認証が設定されているかチェック
 function isOAuthConfigured() {
     return GOOGLE_CONFIG.CLIENT_ID && GOOGLE_CONFIG.CLIENT_ID.includes('apps.googleusercontent.com');
@@ -49,7 +39,7 @@ function isOAuthConfigured() {
 
 // APIキーが設定されているかチェック
 function isGoogleCalendarConfigured() {
-    return false; // OAuth専用
+    return GOOGLE_CONFIG.API_KEY && GOOGLE_CONFIG.API_KEY.startsWith('AIza');
 }
 
 // ログ出力制御
@@ -57,7 +47,7 @@ function secureLog(level, message, data = null) {
     if (GOOGLE_CONFIG.PRODUCTION_MODE) {
         // 本番環境では重要なエラーのみ出力
         if (level === 'error' && GOOGLE_CONFIG.LOG_LEVEL === 'error') {
-            console.error('Error occurred');
+            console.error('エラーが発生しました');
         }
         return;
     }
